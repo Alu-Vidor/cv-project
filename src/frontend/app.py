@@ -3,6 +3,7 @@ from typing import Optional
 
 import requests
 import streamlit as st
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 st.set_page_config(page_title="AI Calorie Counter", page_icon="🍎", layout="wide")
 
@@ -15,8 +16,8 @@ BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000").rstrip("/")
 PREDICT_ENDPOINT = f"{BACKEND_URL}/predict"
 
 
-def _choose_image(upload: Optional[st.uploaded_file_manager.UploadedFile],
-                  camera: Optional[st.uploaded_file_manager.UploadedFile]):
+def _choose_image(upload: Optional[UploadedFile],
+                  camera: Optional[UploadedFile]) -> Optional[UploadedFile]:
     if upload is not None:
         return upload
     if camera is not None:
@@ -25,14 +26,19 @@ def _choose_image(upload: Optional[st.uploaded_file_manager.UploadedFile],
 
 
 def _format_calories(value) -> str:
+    unit = "kcal"
+    if isinstance(value, dict):
+        unit = value.get("unit") or unit
+        value = value.get("value")
+
     try:
         numeric = float(value)
     except (TypeError, ValueError):
-        return "—"
-    if numeric.is_integer():
-        return f"{int(numeric)} ккал"
-    return f"{numeric:.1f} ккал"
+        return "?"
 
+    if numeric.is_integer():
+        return f"{int(numeric)} {unit}"
+    return f"{numeric:.1f} {unit}"
 
 uploaded_file = st.file_uploader(
     "Загрузите фото блюда",

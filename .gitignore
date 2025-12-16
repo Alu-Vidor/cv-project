@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache / local settings
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+
+# Logs / temp files
+*.log
+*.tmp
+
+# Data/model artifacts
+data/
+*.pth
+*.pt
+*.onnx
+
+# IDE settings
+.idea/
+.vscode/
+
+# Streamlit
+.streamlit/
