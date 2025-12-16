@@ -24,12 +24,6 @@ coverage.xml
 *.log
 *.tmp
 
-# Data/model artifacts
-data/
-*.pth
-*.pt
-*.onnx
-
 # IDE settings
 .idea/
 .vscode/
